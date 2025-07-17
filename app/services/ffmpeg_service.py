@@ -1,0 +1,135 @@
+import ffmpeg
+import logging
+from typing import Dict, List
+from app.models.audio import Audio
+from app.models.transcription_job import TranscriptionJob
+from app.models.transcription import Transcription
+from app.repositories.transcription_job_repository import TranscriptionJobRepository
+
+
+
+logging.basicConfig(level=logging.INFO) 
+
+logger = logging.getLogger(__name__)
+
+class FfmpegUtils : 
+
+    def __init__(self , transcripton_job_repo : TranscriptionJobRepository): # dependency injection
+        self.job_repo = transcripton_job_repo
+        
+    
+    def extract_audio(self, job : TranscriptionJob , output_dir: str,
+                  start: str = "00:00:00" ,
+                  duration: str = None,
+                  bitrate: str = "192k",
+                  sampling_rate: int = 16000,
+                  audio_format: str = 'wav'):
+
+        logger.info("audio extraction is starting")
+
+
+        audio = Audio(
+            job_id=job.id , 
+            audio_filepath= None, 
+            language=job.input_language
+        )
+
+        audio.audio_filepath = output_dir + f"/{audio.id}.{audio_format}"
+
+
+        try:
+
+            # input stream
+            stream = ffmpeg.input(job.video_storage_path , ss = start) 
+
+            # output options : 
+            output_kwargs = {
+                'format' : audio_format , 
+                'ar' : sampling_rate , 
+                'audio_bitrate' : bitrate , 
+                'map' : '0:a:0'
+            }
+
+            # specify duration if provided : 
+            if duration : 
+                output_kwargs['t'] = duration
+            
+            (
+                stream
+                .output(audio.audio_filepath , **output_kwargs) 
+                .overwrite_output()
+                .run(quiet = False , capture_stdout=True , capture_stderr = True)
+            )
+
+            logger.info(f"Audio extraction was successful : {audio}")
+
+            return audio
+
+        except ffmpeg.Error as e:
+            logger.error("Error during extraction: %s", e)
+            logger.error("FFmpeg stdout:\n %s", e.stdout.decode('utf-8', errors='ignore'))
+            logger.error("FFmpeg stdout:\n %s", e.stderr.decode('utf-8', errors='ignore'))
+
+            raise
+
+
+        
+    def mux_subtitles(self, transcriptions_list : List[Transcription] ,  output_dir : str ):
+        
+        # The video path should be extracted from the TranascriptionJob based one of the transcriptions in the list passed as argument
+        job_id = transcriptions_list[0].job_id
+
+        # extract the corresponding job :
+        job : TranscriptionJob = self.job_repo.get_job(job_id)
+
+        # extract the path where the video is stored :
+        video_path = job.video_storage_path
+
+        # extract the srt paths as dictionary :
+        srt_paths = {} 
+
+        for transcription in transcriptions_list : 
+            srt_paths[transcription.target_language] = transcription.srt_filepath
+        
+        try:
+            logger.info(f"Muxing process for video: {video_path} is starting ...")
+
+            inputs = [ffmpeg.input(video_path)]
+
+            for srt_file in srt_paths.values():
+                inputs.append(ffmpeg.input(srt_file))
+
+            # Maps for video and audio
+            map_args = ['-map', '0:v', '-map', '0:a']
+
+            # Prepare output kwargs for metadata
+            output_kwargs = {
+                'c': 'copy',
+                'movflags': '+faststart'
+            }
+
+            for idx, lang_code in enumerate(srt_paths.keys(), start=1):
+
+                map_args += ['-map', f'{idx}:0']
+
+                # Set language metadata
+                output_kwargs[f'metadata:s:s:{idx - 1}'] = f'language={lang_code}'
+
+                # Set title metadata using the correct format
+                map_args += ['-metadata:s:s:{}'.format(idx - 1), f'title={lang_code.capitalize()} Subtitles']
+            
+            output_path = output_dir + f"/video_{job_id}.mkv"
+            # Build output with all inputs and metadata
+            out = ffmpeg.output(*inputs, output_path, **output_kwargs)
+            out = out.global_args(*map_args)
+            out = out.overwrite_output()
+            out.run(quiet=False)
+
+            logger.info(f"Muxing completed successfully, output saved to: {output_path}")
+
+        except ffmpeg.Error as e:
+            logger.error("Error during muxing: %s", e)
+            logger.error("FFmpeg stdout:\n %s", e.stdout.decode('utf-8', errors='ignore'))
+            logger.error("FFmpeg stderr:\n %s", e.stderr.decode('utf-8', errors='ignore'))
+            raise
+
