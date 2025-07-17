@@ -1,4 +1,4 @@
-from app.services.subtitle_formatter_service import SubtitleWriter
+from app.services.subtitle_fromatter_service import SubtitleWriter
 from app.models.audio import Audio
 from app.services.transcription_service import ASRMOdel
 from app.services.audio_service import AudioUtils
@@ -24,7 +24,7 @@ def test_subtitle_formatting() :
     # create an audio object : 
     audio = Audio(
         job_id= job.id, 
-        audio_filepath="app/tests/test_data/audios/audio_4eeb4e5d_job_62027c72.wav" , 
+        audio_filepath="app/tests/test_data/audios/audio_9dca7ccc_job_f6c1f86c.wav" , 
         language="french"
     )
 
@@ -41,13 +41,13 @@ def test_subtitle_formatting() :
     # translate the the transcription : 
     translator = TranslationModel(repo) 
 
-    trans = translator.translate_transcription_to_multiple_languages(transcription) 
+    transcriptions_list = translator.translate_transcription_to_multiple_languages(transcription) 
 
 
     # format and save the transcriptions :
     writer = SubtitleWriter() 
 
-    writer.batch_save(transcriptions=translated_transcriptions , 
+    writer.batch_save(transcription_list=transcriptions_list , 
                       output_dir="app/tests/test_data/transcriptions")
 
 

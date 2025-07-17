@@ -74,21 +74,43 @@ class FfmpegUtils :
 
 
         
-    def mux_subtitles(self, transcriptions_list : List[Transcription] ,  output_dir : str ):
+    def mux_subtitles(self, transcriptions_list: List[Transcription], output_dir: str):
+    
+        # Validate input parameters
+        if not transcriptions_list:
+            raise ValueError("transcriptions_list cannot be empty")
         
-        # The video path should be extracted from the TranascriptionJob based one of the transcriptions in the list passed as argument
+        if not output_dir:
+            raise ValueError("output_dir cannot be None or empty")
+        
+        # The video path should be extracted from the TranscriptionJob based on one of the transcriptions in the list passed as argument
         job_id = transcriptions_list[0].job_id
+        
+        if not job_id:
+            raise ValueError("job_id cannot be None or empty")
 
-        # extract the corresponding job :
-        job : TranscriptionJob = self.job_repo.get_job(job_id)
+        # extract the corresponding job:
+        job: TranscriptionJob = self.job_repo.get_job(job_id)
+        
+        if not job:
+            raise ValueError(f"Job with ID {job_id} not found")
 
-        # extract the path where the video is stored :
+        # extract the path where the video is stored:
         video_path = job.video_storage_path
+        
+        if not video_path:
+            raise ValueError(f"Video storage path is None for job {job_id}")
 
-        # extract the srt paths as dictionary :
-        srt_paths = {} 
+        # extract the srt paths as dictionary:
+        srt_paths = {}
 
-        for transcription in transcriptions_list : 
+        for transcription in transcriptions_list:
+            if not transcription.srt_filepath:
+                raise ValueError(f"SRT filepath is None for transcription with job_id {transcription.job_id} and language {transcription.target_language}")
+            
+            if not transcription.target_language:
+                raise ValueError(f"Target language is None for transcription with job_id {transcription.job_id}")
+                
             srt_paths[transcription.target_language] = transcription.srt_filepath
         
         try:
@@ -109,7 +131,6 @@ class FfmpegUtils :
             }
 
             for idx, lang_code in enumerate(srt_paths.keys(), start=1):
-
                 map_args += ['-map', f'{idx}:0']
 
                 # Set language metadata
@@ -118,7 +139,8 @@ class FfmpegUtils :
                 # Set title metadata using the correct format
                 map_args += ['-metadata:s:s:{}'.format(idx - 1), f'title={lang_code.capitalize()} Subtitles']
             
-            output_path = output_dir + f"/video_{job_id}.mkv"
+            output_path = f"{output_dir}/video_subtitled_{job_id}.mkv"
+            
             # Build output with all inputs and metadata
             out = ffmpeg.output(*inputs, output_path, **output_kwargs)
             out = out.global_args(*map_args)
@@ -132,4 +154,3 @@ class FfmpegUtils :
             logger.error("FFmpeg stdout:\n %s", e.stdout.decode('utf-8', errors='ignore'))
             logger.error("FFmpeg stderr:\n %s", e.stderr.decode('utf-8', errors='ignore'))
             raise
-

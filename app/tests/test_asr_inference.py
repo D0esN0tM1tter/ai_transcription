@@ -8,7 +8,7 @@ def test_asr_model() :
      # create an audio object : 
     audio = Audio(
         job_id="vid_id" , 
-        audio_filepath="app/tests/test_data/audios/audio_4eeb4e5d_job_62027c72.wav" , 
+        audio_filepath="app/tests/test_data/audios/audio_9dca7ccc_job_f6c1f86c.wav" , 
         language="french"
     )
 
@@ -17,13 +17,20 @@ def test_asr_model() :
 
     # create the model object and run inference : 
     asr = ASRMOdel(model_id="openai/whisper-small") 
+
     trannscription = asr.transcribe(
+        audio=audio_utils
+
     )
 
     
     print("\n ------------ Transcription -------------\n") 
     print(trannscription.__repr__())
+
+    print("\n ------------ content -------------\n") 
     print(trannscription.original_text) 
+
+    print("\n ------------ Chunks -------------\n") 
     print(trannscription.original_chunks)
 
 

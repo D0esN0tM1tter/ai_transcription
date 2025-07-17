@@ -14,9 +14,9 @@ def test_audio_extraction() -> Dict :
     # create a transcription Job : 
     job = TranscriptionJob(
         video_filename="input_video.mp4" , 
-        input_language="french" , 
+        input_language="spanish" , 
         target_languages= ["arabic" , "french" , "spanish"], 
-        video_storage_path="app/tests/test_data/videos/news_french.mp4")  
+        video_storage_path="app/tests/test_data/videos/news_spanish.mp4")  
     
     logger.info(f"A Job object has been created : {job}")
 

@@ -23,7 +23,7 @@ def test_translation_model() :
     # create an audio object : 
     audio = Audio(
         job_id= job.id, 
-        audio_filepath="app/tests/test_data/audios/audio_4eeb4e5d_job_62027c72.wav" , 
+        audio_filepath="app/tests/test_data/audios/audio_9dca7ccc_job_f6c1f86c.wav" , 
         language="french"
     )
 
