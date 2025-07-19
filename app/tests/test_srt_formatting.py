@@ -1,4 +1,4 @@
-from app.services.subtitle_fromatter_service import SubtitleWriter
+from app.services.subtitle_formatter_service import SubtitleWriter
 from app.models.audio import Audio
 from app.services.transcription_service import ASRMOdel
 from app.services.audio_service import AudioUtils

@@ -14,6 +14,7 @@ class TranscriptionJob:
         self.id = f"job_{uuid.uuid4().hex[:8]}"
         self.video_filename = video_filename
         self.video_storage_path = video_storage_path
+        self.processed_video_path = ""
         self.input_language = input_language
         self.target_languages = target_languages
         self.upload_date = datetime.now()

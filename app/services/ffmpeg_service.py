@@ -140,6 +140,8 @@ class FfmpegUtils :
                 map_args += ['-metadata:s:s:{}'.format(idx - 1), f'title={lang_code.capitalize()} Subtitles']
             
             output_path = f"{output_dir}/video_subtitled_{job_id}.mkv"
+
+            job.processed_video_path = output_path
             
             # Build output with all inputs and metadata
             out = ffmpeg.output(*inputs, output_path, **output_kwargs)
