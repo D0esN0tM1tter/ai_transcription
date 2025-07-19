@@ -5,6 +5,8 @@ from app.models.transcription_job import TranscriptionJob
 from typing import Dict , List
 import logging
 from app.repositories.transcription_job_repository import TranscriptionJobRepository
+from app.repositories.transcription_repository import TranscriptionRepository
+
 import traceback
 import torch
 import gc
@@ -15,12 +17,13 @@ logger = logging.getLogger(__name__)
 
 class TranslationModel : 
 
-    def __init__(self , job_repo : TranscriptionJobRepository):
+    def __init__(self , job_repo : TranscriptionJobRepository , transcription_repo : TranscriptionRepository):
         try:
             if not job_repo:
                 raise ValueError("TranscriptionJobRepository cannot be None")
                 
             self.job_repo = job_repo
+            self.transcription_repo = transcription_repo
             self.models = {}
             
             logger.info("TranslationModel initialized successfully")
@@ -127,8 +130,8 @@ class TranslationModel :
 
             # handle the original transcription first :
             try:
-                transcription.translated_text = transcription.original_text
-                transcription.translated_chunks = transcription.original_chunks if transcription.original_chunks else []
+                transcription.translated_text = ""
+                transcription.translated_chunks = []
                 transcription.target_language = transcription.input_language
 
                 transcriptions_list.append(transcription)
@@ -186,6 +189,7 @@ class TranslationModel :
                     continue
 
             logger.info(f"Translation process has finished. Generated {len(transcriptions_list)} transcriptions.")
+            self.transcription_repo.insert_many_transcriptions(transcriptions_list)
             return transcriptions_list
             
         except Exception as e:

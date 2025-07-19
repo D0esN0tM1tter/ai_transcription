@@ -1,5 +1,6 @@
 from typing import List, Dict 
 from app.models.transcription import Transcription
+from app.repositories.transcription_repository import TranscriptionRepository
 import logging
 import os
 
@@ -8,8 +9,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SubtitleWriter:
-    def __init__(self):
-        return
+    def __init__(self , transcription_repository : TranscriptionRepository): 
+
+        self.transcription_repo = transcription_repository
+        
 
     @staticmethod
     def _format_timestamp(seconds: float) -> str:
@@ -98,11 +101,23 @@ class SubtitleWriter:
         output_path = os.path.join(output_dir, f"{transcription.id}_{transcription.target_language}.srt")
         
         # FIXED: Set srt_filepath to the complete file path, not just the directory
-        transcription.srt_filepath = output_path
+        transcription.srt_filepath = output_path 
+
+        # update the transcription in the database
+        self.transcription_repo.update_transcription(
+            id=transcription.id , 
+            new_transcription=transcription
+        )
+
         
-        # Validate transcription chunks
-        chunks = transcription.translated_chunks
+        # handling the original transcription
+        if transcription.input_language.lower() == transcription.target_language.lower() :
+            chunks = transcription.original_chunks
+        else : 
+            chunks = transcription.translated_chunks
+        
         if not chunks:
+
             logger.warning(f"No translated chunks found for transcription {transcription.id}")
             # Create an empty SRT file to avoid None filepath issues
             with open(output_path, 'w', encoding='utf-8') as f:

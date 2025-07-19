@@ -26,7 +26,7 @@ def test_muxing() :
     # create an audio object : 
     audio = Audio(
         job_id= job.id, 
-        audio_filepath="app/tests/test_data/audios/audio_364945d2_job_ce8d2583.wav" , 
+        audio_filepath="app/tests/test_data/audios/audio_5e46b96b_job_fd9f49e4.wav" , 
         language="spanish"
     )
 
@@ -54,7 +54,7 @@ def test_muxing() :
     ffmpeg = FfmpegUtils(transcripton_job_repo=repo)
 
 
-    ffmpeg.mux_subtitles(
+    job : TranscriptionJob = ffmpeg.mux_subtitles(
         transcriptions_list=translated_transcriptions , 
         output_dir="app/tests/test_data/videos"
     )

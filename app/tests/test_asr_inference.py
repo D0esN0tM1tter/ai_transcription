@@ -1,38 +1,48 @@
 from app.services.transcription_service import ASRMOdel
 from app.services.audio_service import AudioUtils
 from app.models.audio import Audio
+from app.repositories.transcription_job_repository import TranscriptionJobRepository
+from app.repositories.transcription_repository import TranscriptionRepository
+
+from app.models.transcription_job import TranscriptionJob
+from app.services.ffmpeg_service import FfmpegUtils
 
 
 def test_asr_model() : 
 
-     # create an audio object : 
-    audio = Audio(
-        job_id="vid_id" , 
-        audio_filepath="app/tests/test_data/audios/audio_9dca7ccc_job_f6c1f86c.wav" , 
-        language="french"
+
+    job_repo = TranscriptionJobRepository(
+        db_path="app/tests/test_data/database/test_db.json" , 
+    )
+
+    transcription_repo = TranscriptionRepository(
+        db_path="app/tests/test_data/database/test_db.json"
+    )
+
+    # create a transcription Job : 
+    job = TranscriptionJob(
+        input_language="french" , 
+        target_languages= ["arabic" , "french" , "spanish"], 
+        video_storage_path="app/tests/test_data/videos/news_french.mp4")  
+    
+    # Audio extraction with ffmpeg service : 
+    extractor = FfmpegUtils(transcripton_job_repo=job_repo) 
+    
+    extracted_audio = extractor.extract_audio(
+        job=job , 
+        output_dir="app/tests/test_data/audios" , 
     )
 
     # encapsulate it in audio utils : 
-    audio_utils = AudioUtils(audio=audio)
+    audio_utils = AudioUtils(audio=extracted_audio)
 
     # create the model object and run inference : 
-    asr = ASRMOdel(model_id="openai/whisper-small") 
+    asr = ASRMOdel(model_id="openai/whisper-small" , transcription_repo=transcription_repo) 
 
     trannscription = asr.transcribe(
         audio=audio_utils
 
     )
-
-    
-    print("\n ------------ Transcription -------------\n") 
-    print(trannscription.__repr__())
-
-    print("\n ------------ content -------------\n") 
-    print(trannscription.original_text) 
-
-    print("\n ------------ Chunks -------------\n") 
-    print(trannscription.original_chunks)
-
 
 
 if __name__ == "__main__" : 

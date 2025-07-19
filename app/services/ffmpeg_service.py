@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class FfmpegUtils : 
 
-    def __init__(self , transcripton_job_repo : TranscriptionJobRepository): # dependency injection
+    def __init__(self , transcripton_job_repo : TranscriptionJobRepository): 
         self.job_repo = transcripton_job_repo
         
     
@@ -26,6 +26,9 @@ class FfmpegUtils :
                   audio_format: str = 'wav'):
 
         logger.info("audio extraction is starting")
+
+        # save the input job to the database :
+        self.job_repo.insert_job(job)
 
 
         audio = Audio(
@@ -74,7 +77,7 @@ class FfmpegUtils :
 
 
         
-    def mux_subtitles(self, transcriptions_list: List[Transcription], output_dir: str):
+    def mux_subtitles(self, transcriptions_list: List[Transcription], output_dir: str) -> TranscriptionJob:
     
         # Validate input parameters
         if not transcriptions_list:
@@ -148,8 +151,13 @@ class FfmpegUtils :
             out = out.global_args(*map_args)
             out = out.overwrite_output()
             out.run(quiet=False)
-
+            
             logger.info(f"Muxing completed successfully, output saved to: {output_path}")
+            job.processed = True
+
+            return job
+
+
 
         except ffmpeg.Error as e:
             logger.error("Error during muxing: %s", e)

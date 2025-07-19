@@ -4,45 +4,53 @@ from app.services.audio_service import AudioUtils
 from app.services.transcription_service import ASRMOdel
 from app.models.transcription_job import TranscriptionJob
 from app.repositories.transcription_job_repository import TranscriptionJobRepository
+from app.repositories.transcription_repository import TranscriptionRepository
+from app.services.ffmpeg_service import FfmpegUtils
+
 from app.models.transcription import Transcription
 from typing import List
 
 
 def test_translation_model() : 
 
-    repo = TranscriptionJobRepository()
+    job_repo = TranscriptionJobRepository(
+        db_path="app/tests/test_data/database/test_db.json" , 
+    )
 
+    transcription_repo = TranscriptionRepository(
+        db_path="app/tests/test_data/database/test_db.json"
+    )
+
+    # create a transcription Job : 
     job = TranscriptionJob(
-        video_filename="input_video.mp4" , 
         input_language="french" , 
-        target_languages= ["arabic" , "english"], 
-        video_storage_path="app/tests/test_data/videos/news_french.mp4") 
+        target_languages= ["arabic" , "french" , "english"], 
+        video_storage_path="app/tests/test_data/videos/news_french.mp4")  
     
-    repo.add_job(job)
+    # Audio extraction with ffmpeg service : 
+    extractor = FfmpegUtils(transcripton_job_repo=job_repo) 
     
-    # create an audio object : 
-    audio = Audio(
-        job_id= job.id, 
-        audio_filepath="app/tests/test_data/audios/audio_9dca7ccc_job_f6c1f86c.wav" , 
-        language="french"
+    extracted_audio = extractor.extract_audio(
+        job=job , 
+        output_dir="app/tests/test_data/audios" , 
     )
 
     # encapsulate it in audio utils : 
-    audio_utils = AudioUtils(audio=audio)
+    audio_utils = AudioUtils(audio=extracted_audio)
 
     # create the model object and run inference : 
-    asr = ASRMOdel(model_id="openai/whisper-tiny") 
+    asr = ASRMOdel(model_id="openai/whisper-small" , transcription_repo=transcription_repo) 
 
     transcription = asr.transcribe(
         audio=audio_utils
+
     )
 
     # translate the the transcription : 
-    translator = TranslationModel(repo) 
+    translator = TranslationModel(job_repo=job_repo , transcription_repo=transcription_repo) 
 
     translated_transcriptions : List[Transcription] = translator.translate_transcription_to_multiple_languages(transcription) 
 
-    print(translated_transcriptions[1].original_text)
 
 
 if __name__ == "__main__" :

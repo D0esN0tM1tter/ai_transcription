@@ -1,0 +1,270 @@
+{
+    "transcription_jobs": {
+        "1": {
+            "job_id": "job_4bafcd55",
+            "original_video_path": "app/tests/test_data/videos/news_french.mp4",
+            "processed_video_path": "",
+            "input_language": "french",
+            "target_languages": [
+                "arabic",
+                "french",
+                "english"
+            ],
+            "upload_date": "2025-07-19T22:06:06.925413",
+            "processed": false
+        }
+    },
+    "transcriptions": {
+        "1": {
+            "transcription_id": "transcription_1fe39219_job_4bafcd55",
+            "job_id": "job_4bafcd55",
+            "original_text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise. Mohamed Eilishka. L'information a \u00e9t\u00e9 la...",
+            "original_chunks": [
+                {
+                    "timestamp": [
+                        0.0,
+                        7.76
+                    ],
+                    "text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis"
+                },
+                {
+                    "timestamp": [
+                        7.76,
+                        12.68
+                    ],
+                    "text": " le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs"
+                },
+                {
+                    "timestamp": [
+                        12.68,
+                        17.88
+                    ],
+                    "text": " des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine"
+                },
+                {
+                    "timestamp": [
+                        17.88,
+                        26.12
+                    ],
+                    "text": " qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise."
+                },
+                {
+                    "timestamp": [
+                        26.12,
+                        27.12
+                    ],
+                    "text": " Mohamed Eilishka."
+                },
+                {
+                    "timestamp": [
+                        28.12,
+                        30.12
+                    ],
+                    "text": " L'information a \u00e9t\u00e9 la..."
+                }
+            ],
+            "translated_text": "",
+            "translated_chunks": [],
+            "input_language": "french",
+            "current_language": "french",
+            "srt_filepath": "app/tests/test_data/transcriptions/transcription_1fe39219_job_4bafcd55_french.srt",
+            "creation_datetime": "2025-07-19T22:07:05.664460"
+        },
+        "2": {
+            "transcription_id": "transcription_e7aeee3e_job_4bafcd55",
+            "job_id": "job_4bafcd55",
+            "original_text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise. Mohamed Eilishka. L'information a \u00e9t\u00e9 la...",
+            "original_chunks": [
+                {
+                    "timestamp": [
+                        0.0,
+                        7.76
+                    ],
+                    "text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis"
+                },
+                {
+                    "timestamp": [
+                        7.76,
+                        12.68
+                    ],
+                    "text": " le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs"
+                },
+                {
+                    "timestamp": [
+                        12.68,
+                        17.88
+                    ],
+                    "text": " des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine"
+                },
+                {
+                    "timestamp": [
+                        17.88,
+                        26.12
+                    ],
+                    "text": " qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise."
+                },
+                {
+                    "timestamp": [
+                        26.12,
+                        27.12
+                    ],
+                    "text": " Mohamed Eilishka."
+                },
+                {
+                    "timestamp": [
+                        28.12,
+                        30.12
+                    ],
+                    "text": " L'information a \u00e9t\u00e9 la..."
+                }
+            ],
+            "translated_text": "\u0648\u0646\u0639\u0644\u0645 \u0627\u0644\u064a\u0648\u0645 \u0623\u0646 \u0627\u0644\u0645\u062f\u064a\u0631\u064a\u0629 \u0627\u0644\u0639\u0627\u0645\u0629 \u0644\u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u0623\u0631\u0627\u0636\u064a \u0623\u062d\u0627\u0644\u062a \u0641\u064a \u0623\u0648\u0644 \u0647\u0630\u0627 \u0627\u0644\u0634\u0647\u0631 \u0625\u0644\u0649 \u0627\u0644\u0645\u062e\u0627\u0628\u0631\u0627\u062a \u0627\u0644\u0641\u0631\u0646\u0633\u064a\u0629 \u0627\u0644\u062e\u0627\u0631\u062c\u064a\u0629 \u0648\u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629 \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0645\u062d\u062f\u062f\u0629 \u062a\u062a\u0639\u0644\u0642 \u0628\u0645\u0648\u0627\u0637\u0646\u0629 \u0641\u0631\u0646\u0633\u064a\u0629 \u0645\u0646 \u0623\u0635\u0644 \u0645\u063a\u0631\u0628\u064a \u0643\u0627\u0646\u062a \u062a\u062e\u0637\u0637 \u0644\u0639\u0645\u0644\u064a\u0629 \u0625\u0631\u0647\u0627\u0628\u064a\u0629 \u0648\u0634\u064a\u0643\u0629 \u062a\u0633\u062a\u0647\u062f\u0641 \u0645\u0643\u0627\u0646\u0627 \u0644\u0644\u0639\u0628\u0627\u062f\u0629 \u0641\u064a \u0641\u0631\u0646\u0633\u0627\u060c \u0648\u062a\u062d\u062f\u064a\u062f\u0627 \u0643\u0646\u064a\u0633\u0629\u060c \u0645\u062d\u0645\u062f \u0625\u0644\u064a\u0634\u0643\u0627.",
+            "translated_chunks": [
+                {
+                    "timestamp": [
+                        0.0,
+                        7.76
+                    ],
+                    "text": "\u0648\u0642\u062f \u0639\u0644\u0645\u0646\u0627 \u0627\u0644\u064a\u0648\u0645 \u0645\u0646 \u0648\u062d\u062f\u0629 \u0645\u0643\u0627\u0641\u062d\u0629 \u0627\u0644\u0625\u0631\u0647\u0627\u0628 \u0623\u0646 \u0627\u0644\u0645\u062f\u064a\u0631\u064a\u0629 \u0627\u0644\u0639\u0627\u0645\u0629 \u0644\u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u0623\u0631\u0627\u0636\u064a \u0642\u062f \u0623\u0628\u0644\u063a\u062a"
+                },
+                {
+                    "timestamp": [
+                        7.76,
+                        12.68
+                    ],
+                    "text": "\u0661 \u0645\u0646 \u0647\u0630\u0627 \u0627\u0644\u0634\u0647\u0631 \u0641\u064a \u062f\u0627\u0626\u0631\u0629 \u0627\u0644\u0627\u0633\u062a\u062e\u0628\u0627\u0631\u0627\u062a \u0627\u0644\u0641\u0631\u0646\u0633\u064a\u0629 \u0627\u0644\u062e\u0627\u0631\u062c\u064a\u0629 \u0648\u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629"
+                },
+                {
+                    "timestamp": [
+                        12.68,
+                        17.88
+                    ],
+                    "text": "\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u062f\u0642\u064a\u0642\u0629 \u0627\u0644\u0645\u062a\u0639\u0644\u0642\u0629 \u0628\u0645\u0648\u0627\u0637\u0646\u0629 \u0641\u0631\u0646\u0633\u064a\u0629 \u0645\u0646 \u0623\u0635\u0644 \u0645\u063a\u0631\u0628\u064a"
+                },
+                {
+                    "timestamp": [
+                        17.88,
+                        26.12
+                    ],
+                    "text": "\u062e\u0637\u0637\u062a \u0644\u0639\u0645\u0644\u064a\u0629 \u0625\u0631\u0647\u0627\u0628\u064a\u0629 \u0648\u0634\u064a\u0643\u0629 \u0636\u062f \u0645\u0643\u0627\u0646 \u0644\u0644\u0639\u0628\u0627\u062f\u0629 \u0641\u064a \u0641\u0631\u0646\u0633\u0627\u060c \u0648\u0639\u0644\u0649 \u0648\u062c\u0647 \u0627\u0644\u062a\u062d\u062f\u064a\u062f \u0643\u0646\u064a\u0633\u0629."
+                },
+                {
+                    "timestamp": [
+                        26.12,
+                        27.12
+                    ],
+                    "text": "\u0645\u062d\u0645\u062f \u0645\u062d\u0645\u062f \u0625\u0644\u064a\u0634\u0643\u0627."
+                },
+                {
+                    "timestamp": [
+                        28.12,
+                        30.12
+                    ],
+                    "text": "\u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0643\u0627\u0646\u062a..."
+                }
+            ],
+            "input_language": "french",
+            "current_language": "arabic",
+            "srt_filepath": "app/tests/test_data/transcriptions/transcription_e7aeee3e_job_4bafcd55_arabic.srt",
+            "creation_datetime": "2025-07-19T22:07:14.059403"
+        },
+        "3": {
+            "transcription_id": "transcription_83b84d2d_job_4bafcd55",
+            "job_id": "job_4bafcd55",
+            "original_text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise. Mohamed Eilishka. L'information a \u00e9t\u00e9 la...",
+            "original_chunks": [
+                {
+                    "timestamp": [
+                        0.0,
+                        7.76
+                    ],
+                    "text": " L'ute antiterroriste nous apprenons aujourd'hui que la Direction g\u00e9n\u00e9rale de la surveillance du territoire a transmis"
+                },
+                {
+                    "timestamp": [
+                        7.76,
+                        12.68
+                    ],
+                    "text": " le premier de ce mois au service de renseignements fran\u00e7ais ext\u00e9rieurs et int\u00e9rieurs"
+                },
+                {
+                    "timestamp": [
+                        12.68,
+                        17.88
+                    ],
+                    "text": " des informations pr\u00e9cises concernant une citoyenne fran\u00e7aise d'origine marocaine"
+                },
+                {
+                    "timestamp": [
+                        17.88,
+                        26.12
+                    ],
+                    "text": " qui pr\u00e9parait une op\u00e9ration terroriste imminente visant un lieu de culte en France et plus pr\u00e9cis\u00e9ment une \u00e9glise."
+                },
+                {
+                    "timestamp": [
+                        26.12,
+                        27.12
+                    ],
+                    "text": " Mohamed Eilishka."
+                },
+                {
+                    "timestamp": [
+                        28.12,
+                        30.12
+                    ],
+                    "text": " L'information a \u00e9t\u00e9 la..."
+                }
+            ],
+            "translated_text": "The anti-terrorist ute we learn today that the Directorate-General of the surveillance of the territory transmitted the first of this month to the French intelligence service external and internal precise information concerning a French citizen of Moroccan origin who was preparing an imminent terrorist operation aimed at a place of worship in France and more specifically a church. Mohamed Eilishka. The information was the...",
+            "translated_chunks": [
+                {
+                    "timestamp": [
+                        0.0,
+                        7.76
+                    ],
+                    "text": "The counter-terrorism ute we are hearing today that the Directorate-General for Territorial Surveillance has transmitted"
+                },
+                {
+                    "timestamp": [
+                        7.76,
+                        12.68
+                    ],
+                    "text": "the first of this month at the French Foreign and Domestic Intelligence Service"
+                },
+                {
+                    "timestamp": [
+                        12.68,
+                        17.88
+                    ],
+                    "text": "specific information about a French citizen of Moroccan origin"
+                },
+                {
+                    "timestamp": [
+                        17.88,
+                        26.12
+                    ],
+                    "text": "which was preparing an imminent terrorist operation aimed at a place of worship in France and, more specifically, a church."
+                },
+                {
+                    "timestamp": [
+                        26.12,
+                        27.12
+                    ],
+                    "text": "Mohamed Eilishka."
+                },
+                {
+                    "timestamp": [
+                        28.12,
+                        30.12
+                    ],
+                    "text": "The information was the..."
+                }
+            ],
+            "input_language": "french",
+            "current_language": "english",
+            "srt_filepath": "app/tests/test_data/transcriptions/transcription_83b84d2d_job_4bafcd55_english.srt",
+            "creation_datetime": "2025-07-19T22:07:26.868401"
+        }
+    }
+}
