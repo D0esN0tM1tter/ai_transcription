@@ -26,13 +26,12 @@ logger = logging.getLogger(__name__)
 
 class ASRMOdel : 
 
-    def __init__(self , transcription_repo : TranscriptionRepository , model_id : str = "openai/whisper-small" ) :
+    def __init__(self , model_id : str = "openai/whisper-small" ) :
         try:
             self.model_id = model_id 
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") 
             self.dtype = torch.float16 if torch.cuda.is_available() else torch.float32
             self.pipeline : Optional[AutomaticSpeechRecognitionPipeline] = None
-            self.transcription_repo = transcription_repo
             logger.info(f"ASR Model initialized with model_id: {model_id}, device: {self.device}, dtype: {self.dtype}")
             
         except Exception as e:

@@ -10,7 +10,7 @@ class Audio:
                  language : Optional[str] = None
                  ):
         
-        self.id = f"audio_{uuid.uuid4().hex[:8]}_{job_id}"
+        self.id = f"audio_{uuid.uuid4().hex[:]}_{job_id}"
         self.job_id = job_id
         self.audio_filepath = audio_filepath
         self.language = language

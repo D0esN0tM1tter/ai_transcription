@@ -11,11 +11,21 @@ logger = logging.getLogger(__name__)
 
 class AudioUtils() : 
 
-    def __init__(self, audio : Audio) : 
+    def __init__(self) : 
+
+        self.array =  None
+        self.sampling_rate = None
+        self.language = None
+        self.job_id = None
+    
+    def load_resample_audio(self , audio : Audio)  : 
 
         self.array , self.sampling_rate = librosa.load(audio.audio_filepath , sr=None)
-        self.language = audio.language
-        self.job_id = audio.job_id # keeping track of id for future persistence
+        self.language = audio.language 
+        self.job_id = audio.job_id
+        self.resample()
+
+        return self
 
 
     def resample(self , target_sr = 16_000) : 

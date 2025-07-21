@@ -16,7 +16,7 @@ class Transcription:
                  creation_datetime: Optional[datetime] = None,
                  transcription_id: Optional[str] = None):
         
-        self.id = transcription_id or f"transcription_{uuid.uuid4().hex[:8]}_{job_id}"
+        self.id = transcription_id or f"transcription_{uuid.uuid4().hex[:]}_{job_id}"
         self.job_id = job_id
         self.original_text = original_text
         self.original_chunks = original_chunks

@@ -12,7 +12,7 @@ class TranscriptionJob:
                  processed_video_path: Optional[str] = "",
                  upload_date: Optional[datetime] = None):
         
-        self.id = job_id or f"job_{uuid.uuid4().hex[:8]}"
+        self.id = job_id or f"job_{uuid.uuid4().hex[:]}"
         self.video_storage_path = video_storage_path
         self.processed_video_path = processed_video_path or ""
         self.input_language = input_language

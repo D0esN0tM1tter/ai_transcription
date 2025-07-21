@@ -1,67 +1,68 @@
-from app.services.translation_service import TranslationModel
-from app.models.audio import Audio
-from app.services.audio_service import AudioUtils
-from app.services.transcription_service import ASRMOdel
-from app.models.transcription_job import TranscriptionJob
-from app.repositories.transcription_job_repository import TranscriptionJobRepository
-from app.models.transcription import Transcription
-from app.services.ffmpeg_service import FfmpegUtils
 from app.services.subtitle_formatter_service import SubtitleWriter
+from app.models.audio import Audio
+from app.services.transcription_service import ASRMOdel
+from app.services.audio_service import AudioUtils
+from app.repositories.transcription_job_repository import TranscriptionJobRepository
+from app.repositories.transcription_repository import TranscriptionRepository
+from app.services.ffmpeg_service import FfmpegUtils
+from app.models.transcription import Transcription
 from typing import List
+from app.models.transcription_job import TranscriptionJob
+from app.services.translation_service import TranslationModel
 
 
-def test_muxing() : 
 
-    repo = TranscriptionJobRepository()
+def test_subtitle_muxing() : 
 
+    job_repo = TranscriptionJobRepository(
+        db_path="app/tests/test_data/database/test_db.json" , 
+    )
+
+    transcription_repo = TranscriptionRepository(
+        db_path="app/tests/test_data/database/test_db.json"
+    )
+
+    # create a transcription Job : 
     job = TranscriptionJob(
-        video_filename="input_video.mp4" ,
-
-        input_language="spanish" , 
-        target_languages= ["arabic" , "english" , "french"], 
-        video_storage_path="app/tests/test_data/videos/news_spanish.mp4") 
+        input_language="french" , 
+        target_languages= ["arabic" , "french" , "english"], 
+        video_storage_path="app/tests/test_data/videos/news_french.mp4")  
     
-    repo.add_job(job)
+    # Audio extraction with ffmpeg service : 
+    extractor = FfmpegUtils(transcripton_job_repo=job_repo) 
     
-    # create an audio object : 
-    audio = Audio(
-        job_id= job.id, 
-        audio_filepath="app/tests/test_data/audios/audio_5e46b96b_job_fd9f49e4.wav" , 
-        language="spanish"
+    extracted_audio = extractor.extract_audio(
+        job=job , 
+        output_dir="app/tests/test_data/audios" , 
     )
 
     # encapsulate it in audio utils : 
-    audio_utils = AudioUtils(audio=audio)
+    audio_utils = AudioUtils(audio=extracted_audio)
 
     # create the model object and run inference : 
-    asr = ASRMOdel(model_id="openai/whisper-small") 
+    asr = ASRMOdel(model_id="openai/whisper-small" , transcription_repo=transcription_repo) 
 
     transcription = asr.transcribe(
         audio=audio_utils
+
     )
 
     # translate the the transcription : 
-    translator = TranslationModel(repo) 
+    translator = TranslationModel(job_repo=job_repo , transcription_repo=transcription_repo) 
 
     translated_transcriptions : List[Transcription] = translator.translate_transcription_to_multiple_languages(transcription) 
 
-     # format and save the transcriptions :
-    writer = SubtitleWriter() 
+    writer = SubtitleWriter(
+        transcription_repository=transcription_repo
+    )
 
-    writer.batch_save(transcription_list=translated_transcriptions , 
+    transcriptions_list : List[Transcription] = writer.batch_save(transcription_list=translated_transcriptions , 
                       output_dir="app/tests/test_data/transcriptions")
-    
-    ffmpeg = FfmpegUtils(transcripton_job_repo=repo)
-
-
-    job : TranscriptionJob = ffmpeg.mux_subtitles(
-        transcriptions_list=translated_transcriptions , 
+    extractor.mux_subtitles(
+        transcriptions_list=transcriptions_list , 
         output_dir="app/tests/test_data/videos"
     )
-    
-
-if __name__ == "__main__" :
-    test_muxing()
 
 
-    
+if __name__ == "__main__" : 
+    test_subtitle_muxing()

@@ -74,9 +74,7 @@ class FfmpegUtils :
             logger.error("FFmpeg stdout:\n %s", e.stderr.decode('utf-8', errors='ignore'))
 
             raise
-
-
-        
+   
     def mux_subtitles(self, transcriptions_list: List[Transcription], output_dir: str) -> TranscriptionJob:
     
         # Validate input parameters
@@ -154,6 +152,11 @@ class FfmpegUtils :
             
             logger.info(f"Muxing completed successfully, output saved to: {output_path}")
             job.processed = True
+
+            self.job_repo.update_job(
+                id=job_id , 
+                new_job=job
+            )
 
             return job
 
